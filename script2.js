@@ -13,7 +13,7 @@ let score = 0;
 let lives = 3;
 
 const brickRowCount = 8;
-const brickColumnCount = 6;
+const brickColumnCount = 8;
 const delay = 500; //delay to reset the game
 
 // Create ball props
@@ -21,7 +21,7 @@ const ball = {
   x: canvas.width / 2,
   y: canvas.height / 2,
   size: 10,
-  speed: 10,
+  speed: 15,
   dx: 0,
   dy: 0,
   visible: false,
@@ -41,7 +41,7 @@ const paddle = {
 // Create brick props
 const brickInfo = {
   w: canvas.width / 11,
-  h: 20,
+  h: canvas.height /30,
   padding: 10,
   offsetX: 45,
   offsetY: 60,
@@ -63,8 +63,8 @@ btn.addEventListener("click", () => {
   openModal.classList.add("hidden");
   bricks.visible = true;
   ball.visible = true;
-  ball.dx = 4;
-  ball.dy = -3;
+  ball.dx = 6;
+  ball.dy = -6;
   paddle.visible = true;
 });
 
@@ -163,7 +163,7 @@ function moveBall() {
           ball.y + ball.size > brick.y && // top brick side check
           ball.y - ball.size < brick.y + brick.h // bottom brick side check
         ) {
-          ball.dy *= -1;
+          ball.dy *= -1.3;
           brick.visible = false;
 
           increaseScore();
@@ -183,6 +183,7 @@ function moveBall() {
       canvasModal.classList.add("hidden");
       ball.dx = 0;
       ball.dy = 0;
+      ball.y = canvas.height - 35
     }
   }
 }
@@ -273,6 +274,31 @@ function keyUp(e) {
     paddle.dx = 0;
   }
 }
+
+let touchStart
+// Touch start event
+canvasModal.addEventListener('touchstart', (e)=>{
+  e.preventDefault()
+  touchStart = e.touches[0].clientX
+  console.log(touchStart)
+})
+
+canvasModal.addEventListener('touchmove', (e)=>{
+  e.preventDefault()
+  const currentX = e.touches[0].clientX
+  const deltaX = currentX - touchStart
+  if (deltaX > 0) {
+    // console.log(e.touches[0])
+    paddle.dx = paddle.speed;
+  } else if (deltaX < 0) {
+    paddle.dx = -paddle.speed;
+  }
+})
+
+canvasModal.addEventListener('touchend', (e)=>{
+  e.preventDefault()
+  touchStart = 0
+})
 
 // Keyboard event handlers
 document.addEventListener("keydown", keyDown);
