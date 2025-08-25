@@ -61,7 +61,7 @@ const brickInfo = {
   w: canvas.width / 11,
   h: canvas.height /30,
   padding: 10,
-  offsetX: 45,
+  offsetX: 35,
   offsetY: 60,
   visible: true,
 };
