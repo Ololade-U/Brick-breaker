@@ -64,7 +64,7 @@ btn.addEventListener("click", () => {
   bricks.visible = true;
   ball.visible = true;
   ball.dx = 6;
-  ball.dy = -6;
+  ball.dy = -8;
   paddle.visible = true;
 });
 
@@ -163,7 +163,7 @@ function moveBall() {
           ball.y + ball.size > brick.y && // top brick side check
           ball.y - ball.size < brick.y + brick.h // bottom brick side check
         ) {
-          ball.dy *= -1.3;
+          ball.dy *= -1;
           brick.visible = false;
 
           increaseScore();
@@ -276,6 +276,7 @@ function keyUp(e) {
 }
 
 let touchStart
+let currentX
 // Touch start event
 canvasModal.addEventListener('touchstart', (e)=>{
   e.preventDefault()
@@ -285,7 +286,7 @@ canvasModal.addEventListener('touchstart', (e)=>{
 
 canvasModal.addEventListener('touchmove', (e)=>{
   e.preventDefault()
-  const currentX = e.touches[0].clientX
+  currentX = e.touches[0].clientX
   const deltaX = currentX - touchStart
   if (deltaX > 0) {
     // console.log(e.touches[0])
@@ -298,6 +299,7 @@ canvasModal.addEventListener('touchmove', (e)=>{
 canvasModal.addEventListener('touchend', (e)=>{
   e.preventDefault()
   touchStart = 0
+  paddle.dx = 0
 })
 
 // Keyboard event handlers
