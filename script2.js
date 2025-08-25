@@ -2,7 +2,9 @@ const canvasModal = document.getElementById("canvas");
 const openModal = document.querySelector(".sect");
 const btn = document.querySelector(".btn");
 const restartModal = document.querySelector(".restart");
+const winModal = document.querySelector(".congrats");
 const restartBtn = document.querySelector(".restart-btn");
+const winRestartBtn = document.querySelector(".win-restart-btn")
 
 const canvas = document.getElementById("canvas");
 canvas.width = window.innerWidth / 2;
@@ -15,6 +17,22 @@ let lives = 3;
 const brickRowCount = 8;
 const brickColumnCount = 8;
 const delay = 500; //delay to reset the game
+
+// win modal
+
+if(score == (brickColumnCount * brickRowCount)){
+  winModal.classList.remove('hidden')
+}
+
+winRestartBtn.addEventListener("click", () => {
+  showAllBricks(true);
+  canvasModal.classList.remove("hidden");
+  ball.dx = 6;
+  ball.dy = -8;
+  restartModal.classList.add("hidden");
+  lives = 3
+});
+
 
 // Create ball props
 const ball = {
@@ -190,11 +208,9 @@ function moveBall() {
 
 restartBtn.addEventListener("click", () => {
   showAllBricks(true);
-  // location.reload();
-  // startGame();
   canvasModal.classList.remove("hidden");
-  ball.dx = 4;
-  ball.dy = -3;
+  ball.dx = 6;
+  ball.dy = -8;
   restartModal.classList.add("hidden");
   lives = 3
 });
@@ -289,7 +305,6 @@ canvasModal.addEventListener('touchmove', (e)=>{
   currentX = e.touches[0].clientX
   const deltaX = currentX - touchStart
   if (deltaX > 0) {
-    // console.log(e.touches[0])
     paddle.dx = paddle.speed;
   } else if (deltaX < 0) {
     paddle.dx = -paddle.speed;
@@ -306,6 +321,3 @@ canvasModal.addEventListener('touchend', (e)=>{
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
 
-// // Rules and close event handlers
-// rulesBtn.addEventListener("click", () => rules.classList.add("show"));
-// closeBtn.addEventListener("click", () => rules.classList.remove("show"));
